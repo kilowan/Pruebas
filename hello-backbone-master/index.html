@@ -34,15 +34,24 @@
             <h5>&lt;= <a href='#'>back to the article</a></h5>
         </header>
 
-        <section id='UserInput'>
-            <fieldset>
-                <legend>Enter a name and click say hello!</legend>
-                <input type="text" id="name" placeholder="your friend name" value="veera" />
-                <input type="text" id="age" placeholder="your friend age" value="18" /> &#160; <button>Say hello</button>
-            </fieldset>
-        </section>
-
-        <ol id="HelloList"></ol>
+        <script id="userView" type="text/template">
+            Hello my name is <%= nombre %> and I have <%= edad %> years old
+        </script>
+        <script id="formView" type="text/template">
+            <legend>Enter a name and click say hello!</legend>
+            <input type="text" id="nombre" placeholder="your friend name" value="veera" />
+            <input type="text" id="edad" placeholder="your friend age" value="18" /> &#160;
+            <button>Say hello</button>
+        </script>
+        <script id="containerView" type="text/template">
+            <div id="form"></div>
+            <ol id="list"></ol>
+        </script>
+        <script id="usersView" type="text/template">
+            <h2>Usuarios</h2>
+        </script>
+        <div id="content">
+        </div>
 
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="underscore.js"></script>
