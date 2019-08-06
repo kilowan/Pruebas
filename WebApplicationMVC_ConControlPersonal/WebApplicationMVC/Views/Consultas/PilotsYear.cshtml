@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "PilotsYear";
+}
+@model WebApplicationMVC.Models.PilotRooster
+
+<h2>RoosterYear</h2>
+<form action="" method="post">
+    @Html.DisplayFor(m => m.Season)
+    <input type="submit" value="enviar" />
+</form>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Nacionalidad</th>
+        <th>Fecha de nacimiento</th>
+        <th>Puntos</th>
+        @foreach (var t in Model.Pilot_Rooster)
+        {
+    <tr>
+        <td>@t.Name</td>
+        <td>@t.Surname</td>
+        <td>@t.Nacionality</td>
+        <td>@t.Birth_date</td>
+        <td>@t.Points</td>
+    </tr>
+    }
+        </tr>
+    </table>

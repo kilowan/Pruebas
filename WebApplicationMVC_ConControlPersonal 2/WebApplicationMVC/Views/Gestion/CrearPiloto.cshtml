@@ -1,0 +1,51 @@
+﻿@model WebApplicationMVC.Models.DriverHistory
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CrearEquipo</title>
+</head>
+<body>
+    <div>@Html.Partial("View", new ViewDataDictionary { { "name", "Crear Piloto" }, { "URL", "/Gestion/CrearPiloto" } })</div>
+    <div>@Html.ValidationMessage("CustomError")</div>
+    <div>
+        @using (Html.BeginForm("CrearPiloto", "Gestion", FormMethod.Post, null))
+        {
+            <fieldset>
+                <div>
+                    @Html.LabelFor(m => m.driver.Nombre, new { Class = "Label" })
+                    @Html.EditorFor(m => m.driver.Nombre)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.driver.Apellido, new { Class = "Label" })
+                    @Html.EditorFor(m => m.driver.Apellido)
+                    @Html.ValidationMessageFor(m => m.driver.Apellido)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.driver.FechaNacimiento, new { Class = "Label" })
+                    @Html.EditorFor(m => m.driver.FechaNacimiento)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.driver.Nacionalidad, new { Class = "Label" })
+                    @Html.EditorFor(m => m.driver.Nacionalidad)
+                </div>
+                <div>
+                    <label>Año debut</label>
+                    @Html.Partial("SeasonView", new ViewDataDictionary { { "name", "initial_year" }, { "URL", "/Gestion/CrearPiloto" } })
+                </div>
+                <div>
+                    <label>Año retiro</label>
+                    @Html.Partial("SeasonView", new ViewDataDictionary { { "name", "final_year" }, { "URL", "/Gestion/CrearPiloto" } })
+                </div>
+                <input type="submit" value="Dar de alta" />
+            </fieldset>
+        }
+    </div>
+</body>
+</html>
+

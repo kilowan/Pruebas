@@ -1,0 +1,44 @@
+﻿@model WebApplicationMVC.Models.Team
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CrearEquipo</title>
+</head>
+<body>
+    <div>@Html.ValidationMessage("CustomError")</div>
+    <div>
+        @using (Html.BeginForm("CrearEquipo", "Gestion", FormMethod.Post, null))
+        {
+            <fieldset>
+                <div>
+                    @Html.LabelFor(m => m.Nombre, new { Class = "Label" })
+                    @Html.EditorFor(m => m.Nombre)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Fundacion, new { Class = "Label" })
+                    @Html.EditorFor(m => m.Fundacion)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Grandes_Premios, new { Class = "Label" })
+                    @Html.EditorFor(m => m.Grandes_Premios)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Victorias, new { Class = "Label" })
+                    @Html.EditorFor(m => m.Victorias)
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.Mundiales, new { Class = "Label" })
+                    @Html.EditorFor(m => m.Mundiales)
+                </div>
+                <input type="submit" value="Dar de alta" />
+            </fieldset>
+        }
+        </div>
+    </body>
+</html>

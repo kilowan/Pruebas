@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "RoosterYear";
+}
+@model WebApplicationMVC.Models.Rooster
+@Html.Partial("View", new ViewDataDictionary { { "name", "Equipos por año" }, { "URL", "/Gestion/DriversYear" } })
+
+<h2>RoosterYear</h2>
+<form action="" method="post">
+    @Html.DisplayFor(m => m.Season)
+    <input type="submit" value="enviar"/>
+</form>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Fundación</th>
+        <th>Grandes Premios</th>
+        <th>Victorias</th>
+        <th>Mundiales</th>
+        @foreach (var t in Model.TeamRooster)
+        {
+            <tr>
+                <td>@t.Nombre</td>
+                <td>@t.Fundacion</td>
+                <td>@t.Grandes_Premios</td>
+                <td>@t.Victorias</td>
+                <td>@t.Mundiales</td>
+            </tr>
+        }
+    </tr>
+</table>

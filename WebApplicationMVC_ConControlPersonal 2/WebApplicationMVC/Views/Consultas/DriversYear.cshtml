@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "DriversYear";
+}
+@model WebApplicationMVC.Models.ChampsionshipDrivers
+
+@Html.Partial("View", new ViewDataDictionary{ { "name", "Pilotos por año" }, { "URL", "/Gestion/DriversYear" } })
+<h2>DriversYear</h2>
+<form action="" method="post">
+    @Html.DisplayFor(m => m.Season)
+    <input type="submit" value="enviar" />
+</form>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Fecha Nacimiento</th>
+        <th>Nacionalidad</th>
+        <th>Puntos</th>
+        </tr>
+        @foreach (var t in Model.DriversRooster)
+        {
+        <tr>
+            <td>@t.Nombre</td>
+            <td>@t.Apellido</td>
+            <td>@t.FechaNacimiento</td>
+            <td>@t.Nacionalidad</td>
+            <td>@t.Puntos</td>
+        </tr>
+        }
+    </table>

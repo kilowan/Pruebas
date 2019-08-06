@@ -1,0 +1,21 @@
+﻿@model WebApplicationMVC.Models.Season
+
+@if (Model != null)
+{
+    <select name="year" id="year">
+        @{
+            var temporadas = new WebApplicationMVC.Business.GenericManager().GetYears();
+            foreach (var t in temporadas)
+            {
+                if (t.Year == Model.Year)
+                {
+                    <option value="@t.Year" selected="selected">@t.Year</option>
+                }
+                else
+                {
+                    <option value="@t.Year">@t.Year</option>
+                }
+            }
+        }
+    </select>
+}

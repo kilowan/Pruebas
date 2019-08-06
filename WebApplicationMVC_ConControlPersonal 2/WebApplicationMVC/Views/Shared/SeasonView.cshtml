@@ -1,0 +1,11 @@
+﻿@model WebApplicationMVC.Models.Season
+
+    <select name="@ViewData["name"]" id="@ViewData["name"]">
+        @{
+            var temporadas = new WebApplicationMVC.Business.GenericManager().GetYears();
+            foreach (var t in temporadas)
+            {
+                    <option value="@t.Year">@t.Year</option>
+            }
+        }
+    </select>
