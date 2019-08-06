@@ -1,0 +1,17 @@
+**INSERT
+INSERT INTO (tabla)((columna), [...])
+VALUES ((valor), [...])
+
+**READ
+SELECT (campo(s))
+FROM (tabla(s))
+(opcional)WHERE (condicion(es))
+
+**UPDATE
+UPDATE (tabla(s))
+SET (columna) = (valor),[...]
+(opcional)WHERE (condicion(es))
+
+**DELETE
+DELETE FROM (tabla)
+(opcional)WHERE (condicion(es))

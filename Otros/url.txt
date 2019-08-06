@@ -1,0 +1,1 @@
+https://www.c-sharpcorner.com/article/create-a-timer-job-in-sharepoint-2013-programatically-using-server-side-object/

@@ -1,0 +1,29 @@
+*&---------------------------------------------------------------------*
+*& Report  ZDTA50A0
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  ZDTA50A0.
+DATA: var1 type c length 20, 
+var2 type c length 20,
+var3 type c length 50.
+var2 = sy-datum+6(2).
+var1 = sy-datum+4(2).
+CONCATENATE 'Día:' sy-datum+6(2) 'Mes:' sy-datum+4(2) 'Año:' sy-datum(4) INTO var3 SEPARATED by space.
+CONCATENATE 'Fecha:' sy-datum+6(2) '.' sy-datum+4(2) '.' sy-datum(4) INTO var2.
+CONCATENATE 'Hora:' sy-uzeit(2) ':' sy-uzeit+2(2) ':' sy-uzeit+4(2) into var1.
+write var3. skip.
+write var2. skip.
+write var1.
+
+02 - 
+TYPES: BEGIN OF var5, 
+         name TYPE c LENGTH 40, 
+         no   TYPE c LENGTH 4, 
+       END OF var5. 
+data var55 type var5.
+var55 = 'Hi', 'Hi2'.
+write var55.

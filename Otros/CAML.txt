@@ -1,0 +1,14 @@
+<Query>
+	<Where>
+		<Or>
+			<Gt>
+				<FieldRefName="ID">
+				<Value Type="Text">2</Value>
+			</Gt>
+			<Lt>
+				<FieldRefName="ID">
+				<Value Type="Text">3</Value>
+			</Lt>
+		</Or>
+	</Where>
+</Query>

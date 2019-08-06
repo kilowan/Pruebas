@@ -1,0 +1,3 @@
+_layouts/closeConnection.aspx?loginasanotheruser=true
+http://winbecashp/sitios/Alex/_layouts/15/start.aspx#/lists/kilowankenove/allitems.aspx
+http://winbecashp/sitios/Kilowan/_layouts/15/start.aspx#/Lists/ListaPrueba/AllItems.aspx
