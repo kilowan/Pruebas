@@ -1,0 +1,9 @@
+600		000	7	CRISTAL                  	00	03	F	ERT		0001		000	1	CURSO03   		20180
+600		001	0	REPUESTOS                	00	01	R	OH 		0001		000	4	CURSO03   		20180
+600		002	1	MATERIAS AUXILIARES 2    	00	03	R	OH 		0001		000	5	CURSO03   		20180
+600		003	1	MATERIAS PRIMAS 2        	00	03	H	ALB		0001		000	6	CURSO03   		20180
+600		1  	 	LOLI PRUE                	00	02	2	   		2   		2  	 	2         		00000
+600		2  	 	LOLI2                    	00	00	 	   		    		   	 	          		00000
+600		3  	 	LOLI3                    	00	00	 	   		    		   	 	          		00000
+600		4  	 	LOLI4                    	00	00	 	   		    		   	 	          		00000
+600	0001	PRUEBA1                       	0001	DIEN	2801	CONS	PROBANDO    	20190521
