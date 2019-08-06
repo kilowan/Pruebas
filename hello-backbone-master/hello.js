@@ -10,13 +10,18 @@
         Model: Usuario
     });
 
+const nameView = Backbone.Marionette.View.extend(
+    {
+        template: "#name"
+    });
+    
     //03 - Vista que captura el patron del usuario
     const UsuarioView = Backbone.Marionette.View.extend({
         tagName: "li",
         template: "#userView"
     });
 
-    //05 - Coleccion que coge la vista de usuario (si existe) o la vista vacia
+    //05 - Coleccion que coge la vista de usuario (si existe)
     const UsuariosView = Backbone.Marionette.CollectionView.extend({
         //tagName: "p",
         childView: UsuarioView,
