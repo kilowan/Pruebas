@@ -24,7 +24,7 @@ const nameView = Backbone.Marionette.View.extend(
     //05 - Coleccion que coge la vista de usuario (si existe)
     const UsuariosView = Backbone.Marionette.CollectionView.extend({
         //tagName: "p",
-        childView: UsuarioView,
+        childView: UsuarioView
     });
 
     //06 - Vista que captura los datos del formulario
