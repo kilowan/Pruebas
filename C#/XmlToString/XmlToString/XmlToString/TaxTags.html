@@ -1,0 +1,833 @@
+<style>
+    #taxfolder #buttons {
+        text-align: right;
+    }
+
+        #taxfolder #buttons .icon {
+            margin: 0 !important;
+        }
+
+    #taxfolder .taxfolder-report {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    #taxfolder kendo-pdf-document .taxfolder-report {
+        max-height: none;
+    }
+
+
+    #taxfolder .taxfolder-report .widget-bar {
+        margin-top: 1em;
+    }
+
+    #taxfolder .taxfolder-report .widget-body {
+        padding: 1em;
+    }
+
+    #taxfolder .results-title {
+        font-weight: bold;
+        background-color: #dadada;
+        color: #0099FF;
+        padding: 0.3em 0.3em;
+        margin-top: 1em;
+    }
+
+    #taxfolder .results-container .first-col {
+        border-right: 1px solid #dadada;
+    }
+
+    #taxfolder .results-container,
+    #taxfolder .results-container .first-col,
+    #taxfolder .results-container .second-col {
+        display: flex;
+        justify-content: left;
+    }
+
+        #taxfolder .results-container .first-col,
+        #taxfolder .results-container .second-col {
+            width: 50%;
+            flex-direction: column;
+        }
+
+        #taxfolder .results-container .result-item {
+            padding: 0.3em;
+        }
+
+        #taxfolder .results-container .item-label {
+            font-weight: bold;
+        }
+</style>
+<div id="result">
+    <tr class="results-container">
+        <%
+        function displayItem(labelText, itemValue) {
+        if (itemValue) {
+        %>
+        <div class="result-item">
+            <span class="item-label"><%= labelText %>:</span>
+            <span class="item-value"> <%= itemValue %></span>
+        </div>
+        <% } %>
+        <% } %>
+        <%
+        if (datosParaInformeEstados) { %>
+        <div class="first-col">
+            <%
+            displayItem($.i18n.t("taxfolder_Rut"), datosParaInformeEstados.informacionContribuyente.Rut);
+            displayItem($.i18n.t("taxfolder_RazonSocial"), datosParaInformeEstados.informacionContribuyente.RazonSocial);
+            displayItem($.i18n.t("taxfolder_NombreCompleto"), datosParaInformeEstados.informacionContribuyente.NombreCompleto);
+            displayItem($.i18n.t("taxfolder_FechaInicioActividad"), datosParaInformeEstados.informacionContribuyente.FechaInicioActividadString);
+            displayItem($.i18n.t("taxfolder_Categoria"), datosParaInformeEstados.informacionContribuyente.Categoria);
+            displayItem($.i18n.t("taxfolder_FechaInforme"), datosParaInformeEstados.informacionContribuyente.FechaInformeString);
+            %>
+        </div>
+        <div class="second-col">
+            <%
+            displayItem($.i18n.t("taxfolder_FechaCarpeta"), datosParaInformeEstados.informacionContribuyente.FechaCarpetaString);
+            displayItem($.i18n.t("taxfolder_Observaciones"), datosParaInformeEstados.informacionContribuyente.Observaciones);
+            displayItem($.i18n.t("taxfolder_Giro"), datosParaInformeEstados.informacionContribuyente.Giro);
+            displayItem($.i18n.t("taxfolder_Direccion"), datosParaInformeEstados.informacionContribuyente.Direccion);
+            displayItem($.i18n.t("taxfolder_Comuna"), datosParaInformeEstados.informacionContribuyente.Comuna);
+            displayItem($.i18n.t("taxfolder_Telefono"), datosParaInformeEstados.informacionContribuyente.Telefono);
+            displayItem($.i18n.t("taxfolder_Email"), datosParaInformeEstados.informacionContribuyente.Email);
+            %>
+        </div>
+
+        <%
+        if (datosParaInformeEstados.resumenEstadosTipo22 && datosParaInformeEstados.resumenEstadosTipo29) { %>
+        <section id="taxFolderResumenEstados">
+            <%= $.i18n.t('taxfolder_Sucursales') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenEstadosNombre') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenEstadosVerificados') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenEstadosNoVerificados') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenEstadosTotal') %>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (datosParaInformeEstados.resumenEstadosTipo22.length>0) { %>
+                    <tr>
+                        <td><%= $.i18n.t('taxfolder_ResumenEstadosFormulariosF22') %></td>
+                        <td align="right"><%= datosParaInformeEstados.resumenEstadosTipo22[0].Verificados %></td>
+                        <td align="right"><%= datosParaInformeEstados.resumenEstadosTipo22[0].NoVerificados %></td>
+                        <td align="right"><%= datosParaInformeEstados.resumenEstadosTipo22[0].Total %></td>
+                    </tr>
+                    <% } %>
+                    <% if (datosParaInformeEstados.resumenEstadosTipo29.length>0) { %>
+                    <tr>
+                        <td><%= $.i18n.t('taxfolder_ResumenEstadosFormulariosF29') %></td>
+                        <td align="right"><%= datosParaInformeEstados.resumenEstadosTipo29[0].Verificados %></td>
+                        <td align="right"><%= datosParaInformeEstados.resumenEstadosTipo29[0].NoVerificados %></td>
+                        <td align="right"><%= datosParaInformeEstados.resumenEstadosTipo29[0].Total %></td>
+                    </tr>
+                    <% } %>
+
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+        <%
+        if (datosParaInformeEstados.resumenEstadosTipo22.length>0) { %>
+        <section id="taxFolderResumenDocumentosF22">
+            <%= $.i18n.t('taxfolder_ResumenDocumentosF22') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenDocumentosF22Anno') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenDocumentosF22Folio') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenDocumentosF22Estado') %>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.resumenEstadosTipo22[0].ListaEstados, function (listaestado, index) { %>
+                    <tr>
+                        <td align="right"><%= listaestado.Anno %></tdalign="right">
+                        <td align="right"><%= listaestado.Folio %></tdalign="right">
+                        <td align="left"><%= listaestado.Estado %></td>
+                    </tr>
+                    <% },this) %>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+        <%
+        if (datosParaInformeEstados.resumenEstadosTipo29.length>0) { %>
+        <section id="taxFolderResumenDocumentosF29">
+            <%= $.i18n.t('taxfolder_ResumenDocumentosF29') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenDocumentosF29Anno') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenDocumentosF29Mes') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenDocumentosF29Folio') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ResumenDocumentosF29Estado') %>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.resumenEstadosTipo29[0].ListaEstados, function (listaestado, index) { %>
+                    <tr>
+                        <td align="right"><%= listaestado.Anno %></td>
+                        <td align="right"><%= listaestado.Mes %></td>
+                        <td align="right"><%= listaestado.Folio %></td>
+                        <td align="left"><%= listaestado.Estado %></td>
+                    </tr>
+                    <% },this) %>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+        <%
+        if (datosParaInformeEstados.estadosResultados) { %>
+        <section id="taxFolderEstadosResultados">
+            <%= $.i18n.t('taxfolder_EstadosResultados') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_EstadosResultadosDatos') %>
+                        </th>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_EstadosResultados') %>
+                        </th>
+                        <% },this) %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosVentas")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.Ventas %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosCostosDirectos")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.CostosDirectos %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosMargenBruto")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.MargenBruto %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosCostosIndirectos") %></td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.CostosIndirectos %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosMargenOperacional")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.MargenOperacional %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosOtrosIngresos")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.OtrosIngresos %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosInteresesPagados")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.InteresesPagados %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosOtrosGastos")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.OtrosGastos %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosResultadoEjercicio")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.ResultadoEjercicio %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosResultadosEjerciciosAnteriores")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.ResultadosEjerciciosAnteriores %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_EstadosResultadosResultadoAcumulado")%> </td>
+                        <%  _.each(datosParaInformeEstados.estadosResultados, function (estado, index) { %>
+
+                        <td><%= estado.ResultadoAcumulado %></td>
+                        <% },this) %>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+        <% if (datosParaInformeEstados.balances) { %>
+        <section id="taxFolderBalances">
+            <%= $.i18n.t('taxfolder_Balances') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_BalancesDatos') %>
+                        </th>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_BalancesPeriodo') %>
+                        </th>
+                        <% },this) %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="left"><%= $.i18n.t("taxfolder_BalancesCaja") %> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.Caja %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesBanco")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.Banco %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesExistencia") %></td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.Existencias %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesProvisiones") %> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.Provisiones %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%= $.i18n.t("taxfolder_BalancesOtroActivoCirculante") %> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.OtroActivoCirculante %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%= $.i18n.t("taxfolder_BalancesTotalActivoCorriente") %> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.TotalActivoCorriente %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesInmovilizado") %> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.Inmovilizado %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesTotalActivoNoCorriente")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.TotalActivoNoCorriente %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesOtrosActivos")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.OtrosActivos %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesTotalActivo") %></td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.TotalActivo %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesPasivoCorriente")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.PasivoCorriente %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesTotalPasivoCorriente")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.TotalPasivoCorriente %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesPasivoNoCorriente")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.PasivoNoCorriente %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesTotalPasivoNoCorriente")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.TotalPasivoNoCorriente %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesTotalPasivo")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.TotalPasivo %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesCapitalSocial") %></td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.CapitalSocial %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesOtroPasivoNoExigible")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.OtroPasivoNoExigible %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesResultadoEjercicio") %></td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.ResultadoEjercicio %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesTotalPasivoNeto")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.TotalPasivoNeto %></td>
+                        <% },this) %>
+                    </tr>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_BalancesTotalPatrimonioNetoYPasivo")%> </td>
+                        <%  _.each(datosParaInformeEstados.balances, function (balance, index) { %>
+
+                        <td><%= balance.TotalPatrimonioNetoYPasivo %></td>
+                        <% },this) %>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+        <% if (datosParaInformeEstados.ratios) { %>
+        <section id="taxFolderRatios">
+            <%= $.i18n.t('taxfolder_Ratios') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_RatiosDatos') %>
+                        </th>
+                        <%  _.each(datosParaInformeEstados.ratios, function (ratio, index) { %>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_RatiosPeriodo') %>
+                        </th>
+                        <% },this) %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_RatiosSolvencia")%> </td>
+                        <%  _.each(datosParaInformeEstados.ratios, function (ratio, index) { %>
+
+                        <td><%= ratio.Solvencia %></td>
+                        <% },this) %>
+                    </tr>
+
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_RatiosLiquidez")%> </td>
+                        <%  _.each(datosParaInformeEstados.ratios, function (ratio, index) { %>
+
+                        <td><%= ratio.Liquidez %></td>
+                        <% },this) %>
+                    </tr>
+
+                    <tr>
+                        <td align="left"><%=$.i18n.t("taxfolder_RatiosEndeudamiento")%> </td>
+                        <%  _.each(datosParaInformeEstados.ratios, function (ratio, index) { %>
+
+                        <td><%= ratio.Endeudamiento %></td>
+                        <% },this) %>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+
+        <% if (datosParaInformeEstados.ComprasVentas && datosParaInformeEstados.ComprasVentas.length>0) { %>
+        <section id="taxFolderComprasVentas">
+            <%= $.i18n.t('taxfolder_ComprasVentas') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ComprasVentasDatosFechaPresentacion') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ComprasVentasDatosVentas') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ComprasVentasDatosCompras') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ComprasVentasDatosMargen') %>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.ComprasVentas, function (compras, index) { %>
+                    <tr>
+                        <td><%= compras.FechaPresentacion %></td>
+                        <td><%= compras.Ventas %></td>
+                        <td><%= compras.Compras %></td>
+                        <td><%= compras.Margen %></td>
+                    </tr>
+                    <% },this) %>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+
+        <%
+        if (datosParaInformeEstados.ultimosDocumentosTimbrados && datosParaInformeEstados.ultimosDocumentosTimbrados.length>0) { %>
+        <section id="taxFolderUltimosDocumentosTimbrados">
+            <%= $.i18n.t('taxfolder_UltimosDocumentosTimbrados') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_UltimosDocumentosTimbradosDatosTipoDocumento') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_UltimosDocumentosTimbradosDatosFechaUltimoTimbraje') %>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.ultimosDocumentosTimbrados, function (documento, index) { %>
+                    <tr>
+                        <td><%= documento.TipoDocumento %></td>
+                        <td><%= documento.FechaUltimoTimbraje %></td>
+                    </tr>
+                    <% },this) %>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+        <%
+        if (datosParaInformeEstados.actividadesORubros && datosParaInformeEstados.actividadesORubros.length>0) { %>
+        <section id="taxFolderActividadesORubros">
+            <%= $.i18n.t('taxfolder_ActividadesORubros') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ActividadesORubrosDatosCodigo') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_ActividadesORubrosDatosDescripcion') %>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.actividadesORubros, function (actividad, index) { %>
+                    <tr>
+                        <td><%= actividad.Codigo %></td>
+                        <td><%= actividad.Descripcion %></td>
+                    </tr>
+                    <% },this) %>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+        <%
+        if (datosParaInformeEstados.representantes && datosParaInformeEstados.representantes.length>0) { %>
+        <section id="taxFolderRepresentantesLegales">
+            <%= $.i18n.t('taxfolder_RepresentantantesLegales') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_RepresentantesLegalesNombre') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_RepresentantesLegalesRut') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_RepresentantesLegalesFechaIncorporacion') %>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <%  _.each(datosParaInformeEstados.representantes, function (representante, index) { %>
+                    <tr>
+
+                        <td><%= representante.Nombre %></td>
+                        <td><%= representante.Rut %></td>
+                        <td><%= representante.FechaIncorporacion %></td>
+                    </tr>
+                    <% },this) %>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+        <%
+        if (datosParaInformeEstados.socios && datosParaInformeEstados.socios.length>0) { %>
+        <section id="taxFolderSocios">
+            <%= $.i18n.t('taxfolder_Socios') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_SociosNombre') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_SociosRut') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_SociosFechaInforporacion') %>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.socios, function (socio, index) { %>
+                    <tr>
+                        <td><%= socio.Nombre %></td>
+                        <td><%= socio.Rut %></td>
+                        <td><%= socio.FechaIncorporacion %></td>
+                    </tr>
+
+                    <% },this) %>
+
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+
+        <%
+        if (datosParaInformeEstados.sociedadesParticipadas  && datosParaInformeEstados.sociedadesParticipadas.length>0) { %>
+        <section id="taxFolderSociedadesParticipadas">
+            <%= $.i18n.t('taxfolder_SociedadesParticipadas') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_SociedadesParticipadasNombre') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_SociedadesParticipadasRut') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_SociedadesParticipadasFechaInforporacion') %>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.sociedadesParticipadas, function (sociedades, index) { %>
+                    <tr>
+                        <td><%= sociedades.Nombre %></td>
+                        <td><%= sociedades.Rut %></td>
+                        <td><%= sociedades.FechaIncorporacion %></td>
+                    </tr>
+
+                    <% },this) %>
+
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+
+        <%
+        if (datosParaInformeEstados.propiedades && datosParaInformeEstados.propiedades.length>0) { %>
+        <section id="taxFolderPropiedades">
+            <%= $.i18n.t('taxfolder_Propiedades') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_PropiedadesComuna') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_PropiedadesRol') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_PropiedadesDireccion') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_PropiedadesAvaluo') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_PropiedadesCuotasVencidas') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_PropiedadesCuotasVigentes') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_PropiedadesCondicion') %>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.propiedades, function (propiedad, index) { %>
+                    <tr>
+                        <td><%= propiedad.Comuna %></td>
+                        <td><%= propiedad.Rol %></td>
+                        <td><%= propiedad.Direccion %></td>
+                        <td><%= propiedad.Avaluo %></td>
+                        <td><%= propiedad.CuotasVencidas %></td>
+                        <td><%= propiedad.CoutasVigentes %></td>
+                        <td><%= propiedad.Condicion %></td>
+
+                    </tr>
+
+                    <% },this) %>
+
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+        <%
+        if (datosParaInformeEstados.honorarios && datosParaInformeEstados.honorarios.length>0) { %>
+        <section id="taxFolderHonorarios">
+            <%= $.i18n.t('taxfolder_Honorarios') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_HonorariosFecha') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_HonorariosBruto') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_HonorariosRetencion') %>
+                        </th>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_HonorariosPagoProvisionalMensual') %>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.honorarios, function (honorario, index) { %>
+                    <tr>
+                        <td><%= honorario.Fecha %></td>
+                        <td><%= honorario.Bruto %></td>
+                        <td><%= honorario.Retencion %></td>
+                        <td><%= honorario.PagoProvisionalMensual %></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+
+
+
+        <%
+        if (datosParaInformeEstados.sucursales && datosParaInformeEstados.sucursales.length>0) { %>
+        <section id="taxFolderSucursales">
+            <%= $.i18n.t('taxfolder_Sucursales') %><br>
+            <table class="table-grid">
+                <thead class="table-grid-head table-grid-head-border">
+                    <tr>
+                        <th align="left">
+                            <%= $.i18n.t('taxfolder_SucursalesNombre') %>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  _.each(datosParaInformeEstados.sucursales, function (sucursal, index) { %>
+                    <tr>
+                        <td><%= sucursal %></td>
+                    </tr>
+                    <% },this) %>
+                </tbody>
+            </table>
+        </section>
+        <% } %>
+        <% } %>
+    </div>
+ </div>
+
+

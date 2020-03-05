@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace XmlToString
@@ -13,11 +15,17 @@ namespace XmlToString
         public static string GetData(string ruta)
         {
             // load the file using;
-            var xDocument = XDocument.Load(ruta);
+            XDocument xDocument = XDocument.Load(ruta);
             // convert the xml into string
             string xml = xDocument.ToString();
             return xml;
         }
+        /*public static string GetTags(string path)
+        {
+            String file = File.ReadAllText(@"C:\Users\juan\Downloads\Etiquetas\TaxTags.html");
+            file.g("$.i18n.t(\"");
+            Regex.Matches(file, @"\"(")
+        }*/
 
         public static void SaveSQLFile(string path, string email, string description, string database, string SQLCode)
         {
@@ -41,6 +49,13 @@ namespace XmlToString
 
 {SQLCode}";
             
+        }
+
+        private static void SaveToExcel()
+        {
+            
+            IList<string> strings = new List<string>();
+
         }
     }
 }
