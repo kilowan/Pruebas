@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExcelDataReader;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,12 +21,30 @@ namespace XmlToString
             string xml = xDocument.ToString();
             return xml;
         }
-        /*public static string GetTags(string path)
+        public static IDictionary<string, object> GetTags(string path)
         {
-            String file = File.ReadAllText(@"C:\Users\juan\Downloads\Etiquetas\TaxTags.html");
-            file.g("$.i18n.t(\"");
-            Regex.Matches(file, @"\"(")
-        }*/
+            IDictionary<string, object> Data = new Dictionary<string, object>();
+            using (var stream = File.Open(path, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    int counter = 0;
+                    do
+                    {
+                        while (reader.Read())
+                        {
+                            Data.Add(reader.GetName(counter), reader.GetValue(counter));
+                            counter++;
+                        }
+                    } while (reader.NextResult())
+  ;
+                }
+            }
+            return Data;
+            //String file = File.ReadAllText(@"C:\Users\juan\Downloads\Etiquetas\TaxTags.html");
+            //file.g("$.i18n.t(\"");
+            //Regex.Matches(file, @"\"(")
+        }
 
         public static void SaveSQLFile(string path, string email, string description, string database, string SQLCode)
         {
